@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日单词卡</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 32px 20px; background: radial-gradient(circle at 15% 10%, #e1efe5 0, transparent 38%), radial-gradient(circle at 90% 85%, #e9e7d7 0, transparent 36%), #f5f7f2; color: #1e342a; font-family: system-ui, -apple-system, sans-serif; }
+    main { width: min(100%, 500px); }
+    .eyebrow { color: #4b8062; font-size: 11px; font-weight: 800; letter-spacing: .16em; }
+    h1 { margin: 12px 0 8px; font-size: clamp(30px, 7vw, 36px); letter-spacing: -.04em; }
+    .intro { margin: 0 0 30px; color: #687b70; line-height: 1.6; }
+    .card { padding: clamp(26px, 7vw, 40px); border: 1px solid rgba(255,255,255,.9); border-radius: 24px; background: #fff; box-shadow: 0 20px 55px rgba(43, 75, 54, .10), 0 4px 12px rgba(43, 75, 54, .04); transition: transform .2s ease, box-shadow .2s ease; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 25px 60px rgba(43, 75, 54, .14), 0 5px 15px rgba(43, 75, 54, .05); }
+    .label { color: #62816e; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+    .word { margin: 16px 0 8px; font-size: clamp(38px, 10vw, 54px); letter-spacing: -.045em; line-height: 1.15; overflow-wrap: anywhere; }
+    .meaning { margin: 0; color: #527361; font-size: 19px; line-height: 1.5; }
+    .example { margin-top: 34px; padding: 22px; border-radius: 16px; background: #f3f7f2; }
+    .sentence { margin: 10px 0 0; line-height: 1.7; color: #40594a; }
+    button { width: 100%; margin-top: 22px; padding: 16px; border: 0; border-radius: 14px; background: #315f49; color: white; font: inherit; font-weight: 700; cursor: pointer; box-shadow: 0 8px 20px rgba(49, 95, 73, .18); transition: background .2s ease, transform .2s ease, box-shadow .2s ease; }
+    button:hover { background: #244c39; transform: translateY(-2px); box-shadow: 0 12px 24px rgba(49, 95, 73, .24); }
+    button:active { transform: translateY(0); }
+    button:focus-visible { outline: 3px solid #7eb891; outline-offset: 3px; }
+    .progress { margin: 20px 0 0; text-align: center; color: #718579; font-size: 13px; font-variant-numeric: tabular-nums; }
+    @media (prefers-reduced-motion: reduce) { .card, button { transition: none; } .card:hover, button:hover { transform: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">A LITTLE ENGLISH EVERY DAY</div>
+    <h1>每日单词卡</h1>
+    <p class="intro">每天认识一个新单词，慢慢积累。</p>
+    <article class="card" aria-live="polite">
+      <span class="label">WORD / 单词</span>
+      <h2 class="word" id="word">serendipity</h2>
+      <p class="meaning" id="meaning">意外发现美好事物的运气</p>
+      <div class="example">
+        <span class="label">EXAMPLE / 例句</span>
+        <p class="sentence" id="sentence">Finding this little café was pure serendipity.</p>
+      </div>
+    </article>
+    <button id="next" type="button">下一个单词 →</button>
+    <p class="progress" id="progress">1 / 5</p>
+  </main>
+  <script>
+    const words = [
+      { word: 'serendipity', meaning: '意外发现美好事物的运气', sentence: 'Finding this little café was pure serendipity.' },
+      { word: 'curious', meaning: '好奇的', sentence: 'She is curious about the world around her.' },
+      { word: 'bloom', meaning: '开花；绽放', sentence: 'The flowers bloom in the spring.' },
+      { word: 'journey', meaning: '旅程', sentence: 'Every journey begins with a single step.' },
+      { word: 'courage', meaning: '勇气', sentence: 'It takes courage to try something new.' }
+    ];
+    let current = 0;
+    document.getElementById('next').addEventListener('click', () => {
+      current = (current + 1) % words.length;
+      const entry = words[current];
+      document.getElementById('word').textContent = entry.word;
+      document.getElementById('meaning').textContent = entry.meaning;
+      document.getElementById('sentence').textContent = entry.sentence;
+      document.getElementById('progress').textContent = `${current + 1} / ${words.length}`;
+    });
+  </script>
+</body>
+</html>
